@@ -11,22 +11,32 @@
 shinyUI(
   dashboardPage(
     #App title 
-    dashboardHeader(title = "Computational Drug Discovery Dashborad"),
+    dashboardHeader(
+      title = "Computational Drug Discovery Dashborad"
+      
+    ),
     
     #Sidebar
     dashboardSidebar(
       
-      sidebarSearchForm("search", "Search Bar", label = "Search...",
-                        icon = shiny::icon("search"))
-      
+      selectizeInput(
+        'target', 
+        'Target Selection:', 
+        choices = sort(target_data$Name),
+        options = list(
+          placeholder = 'Please select an option below',
+          onInitialize = I('function() { this.setValue(""); }')
+        )
+        
+      )
     ),
     
     #Body
     dashboardBody(
       
-      fluidRow(
-        dataTableOutput("filteredTable")
-      )
+      # fluidRow(
+      #   dataTableOutput("filteredTable")
+      # )
       
     )
     
@@ -34,3 +44,4 @@ shinyUI(
     
   )
 )
+

@@ -1,0 +1,58 @@
+---
+title: "test"
+output: html_document
+date: "2022-12-12"
+---
+
+```{r}
+library(shiny)
+library(tidyverse)
+library(shinydashboard)
+library(httr)
+library(jsonlite)
+```
+
+
+```{r}
+#Downloaded target data on ChEMBL website, filtered for Type = single proteins and Organism = Homo sapiens Only 
+target_data <- read.csv("data/target_data.csv") %>% 
+                  select(ChEMBL.ID, Name, UniProt.Accessions, Type, Organism, Activities)
+
+target_data <- target_data[!(target_data$Activities == ""),] #Get rid of all rows with no activity data
+```
+
+
+```{r}
+#This function retrieves all bio activity data for your selected target, filtered to only IC50 standard type
+# get_bioactivities_search_data <- function(target_chembl_ID) {
+  target_chembl_ID = "CHEMBL220"
+  status_code <- 200
+  data <- list()
+  url_list <- list()
+  res_list <- list()
+  offset <- 0
+  i <- 1
+  
+  while (status_code != 400) {
+    url_list[i] <- paste("https://www.ebi.ac.uk/chembl/api/data/activity?format=json&limit=1000&offset=",
+                          as.character(offset),
+                          "&standard_type=IC50&target_chembl_id__in=",
+                          target_chembl_ID,
+                          sep = "")
+    
+    res_list[i] <-  GET(url_list[i])
+    data[i] <- fromJSON(rawToChar(res_list[i]$content))
+    i = i+1
+    status_code = res_list[i]$status_code
+  }
+  
+  
+  
+#   return(data$activities)
+# }
+```
+
+
+
+
+

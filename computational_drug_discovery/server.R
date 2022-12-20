@@ -9,13 +9,13 @@
 
 shinyServer(function(input, output) {
   
-  targets_data_filtered <- reactive({
-    get_search_data(input$search)
-    
+
+  target_chembl_ID <- reactive({
+    input$target
+
   })
-  
-  output$filteredTable <- renderDataTable({
-    targets_data_filtered()
-  })
-  
+  # 
+  # output$filteredTable <- renderDataTable({
+  #   targets_data_filtered()
+  # })
 })
