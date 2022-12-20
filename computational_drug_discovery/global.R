@@ -65,6 +65,6 @@ get_bioactivities_data <- function(target_chembl_ID) {
   
   # Bind the responses into a single data frame
   final_df <- bind_rows(responses)
-  
+  return(final_df)
 }
 

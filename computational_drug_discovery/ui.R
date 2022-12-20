@@ -12,12 +12,13 @@ shinyUI(
   dashboardPage(
     #App title 
     dashboardHeader(
-      title = "Computational Drug Discovery Dashborad"
-      
+      title = "Computational Drug Discovery Dashboard",
+      titleWidth = 500
     ),
     
     #Sidebar
     dashboardSidebar(
+      width = 300,
       
       selectizeInput(
         'target', 
@@ -34,9 +35,13 @@ shinyUI(
     #Body
     dashboardBody(
       
-      # fluidRow(
-      #   dataTableOutput("filteredTable")
-      # )
+      fluidRow(
+        column(
+          width = 12,
+          dataTableOutput("bioactivity_data"),
+          style = "height:500px; overflow-y: scroll;overflow-x: scroll;"
+        )
+      )
       
     )
     
