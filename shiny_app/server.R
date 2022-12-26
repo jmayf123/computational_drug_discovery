@@ -12,16 +12,13 @@ shinyServer(function(input, output) {
   
   target_chembl_ID <- reactive({
     
-    target_data %>% 
-      filter(Name == input$target) %>% 
-      select(ChEMBL.ID)
-    
+    target_search(input$target_name) %>% 
+      select(target_chembl_id)
+
   })
   
-  output$bioactivity_data <- renderDataTable({
-    withProgress(
+  output$bioactivities_data <- renderDataTable({
     get_bioactivities_data(target_chembl_ID())
-    )
   })
   
 })
