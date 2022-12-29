@@ -14,4 +14,7 @@ def get_bioactivities_data(target_chembl_ID):
     activity = new_client.activity
     res = activity.filter(target_chembl_id=target_chembl_ID).filter(standard_type="IC50")
     df = pd.DataFrame(res)
-    return(df)
+    if df.size == 0:
+        return('Error, no bioactivities for chosen target.')
+    else:
+        return(df)
