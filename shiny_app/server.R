@@ -9,21 +9,14 @@
 
 shinyServer(function(input, output) {
   
+  target_name <- reactive({
+    input$target_name
+  })
   
-  target_chembl_ID <- reactive({
-    
-    target_search(input$target_name) %>%
-      select(target_chembl_id) %>% 
-      slice(1)
-    
-    # df[1,]
+ output$target_search_results <- renderDataTable({
+   target_search(target_name())
+ })
+  
 
-  })
-  output$target_data <- renderDataTable({
-    target_chembl_ID
-  })
-  output$bioactivities_data <- renderDataTable({
-    get_bioactivities_data(target_chembl_ID())
-  })
   
 })
