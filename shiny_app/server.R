@@ -13,8 +13,16 @@ shinyServer(function(input, output) {
     input$target_name
   })
   
+  chembl_id <- reactive({
+    input$chembl_id
+  })
+  
  output$target_search_results <- renderDataTable({
    target_search(target_name())
+ })
+ 
+ output$bioactivities_search_results <- renderDataTable({
+   get_bioactivities_data(chembl_id())
  })
   
 

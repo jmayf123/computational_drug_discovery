@@ -25,7 +25,13 @@ shinyUI(
       textInput("target_name",
                 h3("Search Target"), 
                 value = "Enter text..."
-      ) 
+      ),
+      
+      textInput("chembl_id",
+                h3("Chembl ID"),
+                value = "Enter text..."
+                
+      )
       
     ),
     
@@ -34,10 +40,16 @@ shinyUI(
       
       fluidRow(
         column(
-          width = 12,
+          width = 6,
           dataTableOutput("target_search_results")
+        ),
+        column(
+          width = 6,
+          dataTableOutput('bioactivities_search_results')
         )
       )
+      
+      
     )
   )
 )
