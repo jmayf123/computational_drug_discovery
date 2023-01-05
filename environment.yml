@@ -1,0 +1,13 @@
+name: drug_discovery
+channels:
+  - defaults
+  - https://conda.anaconda.org/rdkit
+  - conda-forge
+dependencies:
+  #  chembl_webresource_client --- you must pip install this package in your environment afterwards
+  - python
+  - jupyter
+  - numpy
+  - pandas
+  - scikit-learn
+  - rdkit::rdkit
