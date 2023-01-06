@@ -10,17 +10,13 @@
 
 shinyUI(
   
-  dashboardPage(
+  fluidPage(
     
     #App title 
-    dashboardHeader(
-      title = "Computational Drug Discovery Dashboard",
-      titleWidth = 500
-    ),
+    titlePanel("Computational Drug Discovery Dashboard"),
     
     #Sidebar
-    dashboardSidebar(
-      width = 300,
+    sidebarPanel(
       
       textInput("target_name",
                 h3("Search Target"), 
@@ -36,20 +32,27 @@ shinyUI(
     ),
     
     #Body
-    dashboardBody(
-      
-      fluidRow(
-        column(
-          width = 6,
-          dataTableOutput("target_search_results")
+    mainPanel(
+      tabsetPanel(
+        # 1st Tab
+        tabPanel(
+          "Data Tables",
+          fluidRow(
+            column(
+              width = 6,
+              dataTableOutput("target_search_results")
+            ),
+            column(
+              width = 6,
+              dataTableOutput('bioactivities_search_results')
+            )
+          ),
         ),
-        column(
-          width = 6,
-          dataTableOutput('bioactivities_search_results')
-        )
+        # 2nd Tab
+        tabPanel("EDA"),
+        # 3rd Tab
+        tabPanel("ML Drug Discovery")
       )
-      
-      
     )
   )
 )
