@@ -21,10 +21,16 @@ shinyServer(function(input, output) {
    target_search(target_name())
  })
  
- output$bioactivities_search_results <- renderDataTable({
-   get_bioactivities_data(chembl_id())
+
+ 
+ 
+ output$bioactivities_box <- renderValueBox({
+   valueBox(
+     "Number of Bioactivites Found for your Target:",
+     length(get_bioactivities_data(chembl_id()))
+     
+   )
  })
-  
 
   
 })

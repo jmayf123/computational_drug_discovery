@@ -22,17 +22,15 @@ shinyUI(
                 h3("Search Target"), 
                 value = "Enter text..."
       ),
-      
       textInput("chembl_id",
                 h3("Chembl ID"),
                 value = "Enter text..."
-                
       )
-      
     ),
     
     #Body
     mainPanel(
+      
       tabsetPanel(
         # 1st Tab
         tabPanel(
@@ -44,9 +42,9 @@ shinyUI(
             ),
             column(
               width = 6,
-              dataTableOutput('bioactivities_search_results')
+              valueBoxOutput("bioactivities_box")
             )
-          ),
+          )
         ),
         # 2nd Tab
         tabPanel("EDA"),
@@ -54,6 +52,8 @@ shinyUI(
         tabPanel("ML Drug Discovery")
       )
     )
+    
   )
 )
+
 
