@@ -7,7 +7,7 @@
 #    http://shiny.rstudio.com/
 #
 
-shinyServer(function(input, output) {
+shinyServer(function(input, output, session) {
   
   
   output$target_search_results <- renderDataTable({
@@ -23,8 +23,12 @@ shinyServer(function(input, output) {
       icon = icon(name = "pills", lib = "font-awesome"),
       width = NULL,
       color = "red"
-      
+        
     )
+  })
+  
+  observeEvent(input$chembl_id_search, {
+    df_bioactivities <- get_bioactivities_data(input$chembl_id)
   })
   
   

@@ -21,7 +21,7 @@ shinyUI(
       searchInput(
         inputId = "target_name",
         label = "Search Target:",
-        value = "",
+        value = "SARS",
         placeholder = "Enter Target name here ...",
         btnSearch = icon("magnifying-glass"),
         btnReset = icon("xmark"),
@@ -32,7 +32,7 @@ shinyUI(
       searchInput(
         inputId = "chembl_id",
         label = "Search Target ChEMBL ID:",
-        value = "",
+        value = "CHEMBL3927",
         placeholder = "Enter Target ChEMBL ID here ...",
         btnSearch = icon("magnifying-glass"),
         btnReset = icon("xmark"),
@@ -49,8 +49,7 @@ shinyUI(
         tabPanel(
           "Data Tables",
           fluidRow(
-      
-      
+    
             column(
               width = 6,
               dataTableOutput("target_search_results")
