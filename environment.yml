@@ -9,5 +9,6 @@ dependencies:
   - jupyter
   - numpy
   - pandas
+  - seaborn
   - scikit-learn
   - rdkit::rdkit
