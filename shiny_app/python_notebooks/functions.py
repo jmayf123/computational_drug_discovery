@@ -12,7 +12,8 @@ def target_search(target_name):
         raise ValueError('Search Target too broad, Try Another Search Term.')
     else:
         targets = pd.DataFrame(res)
-        return(targets) #Returns a df of targets matching your search term
+        selection = ['organism', 'pref_name', 'target_chembl_id', 'target_type']
+        return(targets[selection]) #Returns a df of targets matching your search term
 
 #Bioactivty data after getting target selection   
 def get_bioactivities_data(target_chembl_ID):

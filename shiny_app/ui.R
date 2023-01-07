@@ -18,13 +18,26 @@ shinyUI(
     #Sidebar
     sidebarPanel(
       
-      textInput("target_name",
-                h3("Search Target"), 
-                value = "Enter text..."
+      searchInput(
+        inputId = "target_name",
+        label = "Search Target:",
+        value = "",
+        placeholder = "Enter Target name here ...",
+        btnSearch = icon("magnifying-glass"),
+        btnReset = icon("xmark"),
+        resetValue = "",
+        width = NULL
       ),
-      textInput("chembl_id",
-                h3("Chembl ID"),
-                value = "Enter text..."
+      
+      searchInput(
+        inputId = "chembl_id",
+        label = "Search Target ChEMBL ID:",
+        value = "",
+        placeholder = "Enter Target ChEMBL ID here ...",
+        btnSearch = icon("magnifying-glass"),
+        btnReset = icon("xmark"),
+        resetValue = "",
+        width = NULL
       )
     ),
     
@@ -36,6 +49,8 @@ shinyUI(
         tabPanel(
           "Data Tables",
           fluidRow(
+      
+      
             column(
               width = 6,
               dataTableOutput("target_search_results")
@@ -44,7 +59,9 @@ shinyUI(
               width = 6,
               valueBoxOutput("bioactivities_box")
             )
+            
           )
+          
         ),
         # 2nd Tab
         tabPanel("EDA"),
