@@ -7,7 +7,7 @@
 #    http://shiny.rstudio.com/
 #
 
-shinyServer(function(input, output, session) {
+shinyServer(function(input, output) {
   
   
   output$target_search_results <- renderDataTable({
@@ -21,16 +21,33 @@ shinyServer(function(input, output, session) {
       "Number of Bioactivites Found for your Target:",
       nrow(get_bioactivities_data(input$chembl_id)),
       icon = icon(name = "pills", lib = "font-awesome"),
-      width = NULL,
+      width = 9,
       color = "red"
         
     )
+    
   })
   
-  observeEvent(input$chembl_id_search, {
-    df_bioactivities <- get_bioactivities_data(input$chembl_id)
+  df_bioactivities <- eventReactive(input$chembl_id_search, {
+    
+    get_bioactivities_data(input$chembl_id)
+    
   })
   
+  
+  
+  #EDA stuff
+  output$eda_plot <- renderPlot({
+    #Create facet grid of 4 lipinski descriptor comparisons, ACTIVE vs INACTIVE
+    
+    df_2_class <- df_bioactivities() %>%#Remove the intermediate Class
+                    filter(bioactivity_class != "intermediate")
+    
+    freq_graph(df_2_class)
+  })
+  output$lipinksi_text <- renderText({
+    "Input the stuff about lipinski descriptors Here"
+  })
   
   
 })

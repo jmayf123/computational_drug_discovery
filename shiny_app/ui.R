@@ -45,26 +45,36 @@ shinyUI(
     mainPanel(
       
       tabsetPanel(
-        # 1st Tab
-        tabPanel(
-          "Data Tables",
-          fluidRow(
-    
-            column(
-              width = 6,
-              dataTableOutput("target_search_results")
-            ),
-            column(
-              width = 6,
-              valueBoxOutput("bioactivities_box")
-            )
-            
-          )
-          
+        # Data Table Tab
+        tabPanel("Data Tables",
+                 fluidRow(
+                   
+                   column(
+                     width = 3,
+                     dataTableOutput("target_search_results")
+                   ),
+                   column(
+                     width = 9,
+                     valueBoxOutput("bioactivities_box")
+                   )
+                   
+                 )
+                 
         ),
-        # 2nd Tab
-        tabPanel("EDA"),
-        # 3rd Tab
+        # Statistical Data analysis on Lipinski Descriptors
+        tabPanel("EDA",
+                 fluidRow(
+                   column(
+                     width = 9,
+                     plotOutput('eda_plot')
+                   )
+                   # column(
+                   #   width = 3,
+                   #   textOutput('lipinski_text')
+                   # )
+                 )
+        ),
+        # ML model to predict different candidates for Drug Therapies
         tabPanel("ML Drug Discovery")
       )
     )
