@@ -39,23 +39,19 @@ shinyServer(function(input, output) {
     
   })
   
-  
-  
   #EDA stuff
   output$freq_graph <- renderPlot({
     
-    
     df_bioactivities_cleaned() %>%#Remove the intermediate Class
       filter(bioactivity_class != "intermediate") %>% 
-      ggplot(aes(x = bioactivity_class)) +
-      geom_bar(aes(y = (after_stat(count))/sum(after_stat(count))), stat = "count", fill = "steelblue") +
+      ggplot(aes(x = bioactivity_class, fill = bioactivity_class)) +
+      geom_bar(aes(y = (after_stat(count))/sum(after_stat(count))), stat = "count") +
       xlab("Bioactivity Class") +
       ylab("Frequency") +
       geom_text(aes(label = scales::percent(after_stat(count)/sum(after_stat(count))), 
                     y = (after_stat(count))/sum(after_stat(count))), stat = "count", 
                 vjust = -0.25, size = 3.5)
-    
-    
+
   })
   
   output$logp_vs_mw_graph <- renderPlot({
@@ -70,7 +66,8 @@ shinyServer(function(input, output) {
       guides(size = guide_legend(title = "pIC50"), color = guide_legend(title = "Bioactivity Class"))
     
   })
-  #Create facet grid of 4 lipinski descriptor comparisons and the pIC50 value, ACTIVE vs INACTIVE
+  
+  #Create facet grid of 4 Lipinski descriptor comparisons and the pIC50 value, ACTIVE vs INACTIVE
   output$box_1 <- renderPlot({
     
     df <- df_bioactivities_cleaned() %>% 
@@ -118,6 +115,7 @@ shinyServer(function(input, output) {
     )
   })
   
+  #Mann-Whitney Statistical Significance Table for all the Lipinski Descriptors
   output$mann_whitney_table <- renderDataTable({
     
     df <- df_bioactivities_cleaned() %>% 
