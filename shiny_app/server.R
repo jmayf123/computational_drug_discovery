@@ -47,14 +47,14 @@ shinyServer(function(input, output) {
     
     df_bioactivities_cleaned() %>%#Remove the intermediate Class
       filter(bioactivity_class != "intermediate") %>% 
-        ggplot(aes(x = bioactivity_class)) +
-        geom_bar(aes(y = (after_stat(count))/sum(after_stat(count))), stat = "count", fill = "steelblue") +
-        xlab("Bioactivity Class") +
-        ylab("Frequency") +
-        geom_text(aes(label = scales::percent(after_stat(count)/sum(after_stat(count))), 
-                      y = (after_stat(count))/sum(after_stat(count))), stat = "count", 
-                      vjust = -0.25, size = 3.5)
-        
+      ggplot(aes(x = bioactivity_class)) +
+      geom_bar(aes(y = (after_stat(count))/sum(after_stat(count))), stat = "count", fill = "steelblue") +
+      xlab("Bioactivity Class") +
+      ylab("Frequency") +
+      geom_text(aes(label = scales::percent(after_stat(count)/sum(after_stat(count))), 
+                    y = (after_stat(count))/sum(after_stat(count))), stat = "count", 
+                vjust = -0.25, size = 3.5)
+    
     
   })
   
@@ -62,16 +62,66 @@ shinyServer(function(input, output) {
     
     df_bioactivities_cleaned() %>% 
       filter(bioactivity_class != "intermediate") %>% 
-        ggplot(aes(x = MW, y = LogP, color = bioactivity_class, size = pIC50)) + 
-        geom_point() + 
-        xlab("MW") + ylab("LogP") + 
-        scale_size_continuous(range = c(1,5)) + 
-        theme_classic() +
-        guides(size = guide_legend(title = "pIC50"), color = guide_legend(title = "Bioactivity Class"))
+      ggplot(aes(x = MW, y = LogP, color = bioactivity_class, size = pIC50)) + 
+      geom_point() + 
+      xlab("MW") + ylab("LogP") + 
+      scale_size_continuous(range = c(1,5)) + 
+      theme_classic() +
+      guides(size = guide_legend(title = "pIC50"), color = guide_legend(title = "Bioactivity Class"))
     
   })
   
+  output$box_1 <- renderPlot({
+    
+    df <- df_bioactivities_cleaned() %>% 
+      filter(bioactivity_class != "intermediate")
+    box_plotter(df,
+                y_data = df$pIC50,
+                y_label = "pIC50 Value"
+    )
+    
+  })
   
+  output$box_2 <- renderPlot({
+    
+    df <- df_bioactivities_cleaned() %>% 
+      filter(bioactivity_class != "intermediate")
+    box_plotter(df,
+                y_data = df$MW,
+                y_label = "MW Value"
+    )
+    
+  })
+  output$box_3 <- renderPlot({
+    
+    df <- df_bioactivities_cleaned() %>% 
+      filter(bioactivity_class != "intermediate")
+    box_plotter(df,
+                y_data = df$LogP,
+                y_label = "LogP Value"
+    )
+    
+  })
+  output$box_4 <- renderPlot({
+    
+    df <- df_bioactivities_cleaned() %>% 
+      filter(bioactivity_class != "intermediate")
+    box_plotter(df,
+                y_data = df$NumHDonors,
+                y_label = "Number of H Donors"
+    )
+    
+  })
+  output$box_5 <- renderPlot({
+    
+    df <- df_bioactivities_cleaned() %>% 
+      filter(bioactivity_class != "intermediate")
+    box_plotter(df,
+                y_data = df$NumHAcceptors,
+                y_label = "Number of H Acceptors"
+    )
+    
+  })
   output$lipinksi_text <- renderText({
     "Input the stuff about lipinski descriptors Here"
   })

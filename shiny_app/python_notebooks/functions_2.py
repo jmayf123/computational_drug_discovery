@@ -6,38 +6,7 @@ from chembl_webresource_client.new_client import new_client
 from rdkit import Chem
 from rdkit.Chem import Descriptors, Lipinski
 
-#Creates a Frequency Graph for Active and Inactive Molecules for your search target 
-def freq_graph(df):
-    plt.figure(figsize=(5.5, 5.5))
-    ax = sns.countplot(x='bioactivity_class', data=df, edgecolor='black')
-    ax.set_xlabel('Bioactivity Class', fontsize=14, fontweight='bold')
-    ax.set_ylabel('Frequency', fontsize=14, fontweight='bold')
-    #Add percentages to graph
-    num_active = len(df[df['bioactivity_class'] == 'active'])
-    num_inactive = len(df[df['bioactivity_class'] == 'inactive'])
-    total = len(df)
-    percentage = [(num_active/total)*100, (num_inactive/total)*100]
-    patches = ax.patches
-    for i in range(len(patches)):
-        x = patches[i].get_x() + patches[i].get_width()/2
-        y = patches[i].get_height()+2
-        ax.annotate('{:.1f}%'.format(percentage[i]), (x, y), ha='center')
 
-
-#Creates a logP value vs molecular weight graph 
-def logP_vs_mw_graph(df):
-    plt.figure(figsize=(5.5, 5.5))
-    sns.scatterplot(x='MW', y='LogP', data=df, hue='bioactivity_class', size='pIC50', edgecolor='black', alpha=0.7)
-    plt.xlabel('MW', fontsize=14, fontweight='bold')
-    plt.ylabel('LogP', fontsize=14, fontweight='bold')
-    plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0)
-
-
-def box_plotter(df, y_data, y_label):
-    plt.figure(figsize=(5.5, 5.5))
-    sns.boxplot(x = 'bioactivity_class', y = y_data, data = df)
-    plt.xlabel('Bioactivity Class', fontsize=14, fontweight='bold')
-    plt.ylabel(y_label, fontsize=14, fontweight='bold')
 
 #Mann-Whitney U Test for statiscal significance of the distributions, ACTIVE vs INACTIVE compounds
 def mannwhitney(descriptor, df, verbose=False):

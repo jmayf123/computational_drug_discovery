@@ -17,6 +17,7 @@ shinyUI(
     
     #Sidebar
     sidebarPanel(
+      width = 3,
       
       searchInput(
         inputId = "target_name",
@@ -72,13 +73,27 @@ shinyUI(
                      width = 6,
                      plotOutput('logp_vs_mw_graph')
                    )
-                   
-                   
                  ),
                  fluidRow(
                    column(
-                     width = 12,
-                     textOutput('lipinski_text')
+                     width = 2.3,
+                     plotOutput('box_1')
+                   ),
+                   column(
+                     width = 2.3,
+                     plotOutput('box_2')
+                   ),
+                   column(
+                     width = 2.3,
+                     plotOutput('box_3')
+                   ),
+                   column(
+                     width = 2.3,
+                     plotOutput('box_4')
+                   ),
+                   column(
+                     width = 2.3,
+                     plotOutput('box_5')
                    )
                  )
         ),
