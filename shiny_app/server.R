@@ -21,7 +21,7 @@ shinyServer(function(input, output) {
       "Number of Bioactivites Found for your Target:",
       nrow(get_bioactivities_data(input$chembl_id)),
       icon = icon(name = "pills", lib = "font-awesome"),
-      width = 9,
+      width = NULL,
       color = "red"
         
     )

@@ -50,11 +50,11 @@ shinyUI(
                  fluidRow(
                    
                    column(
-                     width = 3,
+                     width = 6,
                      dataTableOutput("target_search_results")
                    ),
                    column(
-                     width = 9,
+                     width = 6,
                      valueBoxOutput("bioactivities_box")
                    )
                    
