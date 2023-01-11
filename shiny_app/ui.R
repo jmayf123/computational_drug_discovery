@@ -65,13 +65,21 @@ shinyUI(
         tabPanel("EDA",
                  fluidRow(
                    column(
-                     width = 9,
-                     plotOutput('eda_plot')
+                     width = 3,
+                     plotOutput('freq_graph')
+                   ),
+                   column(
+                     width = 3,
+                     plotOutput('logp_vs_mw_graph')
                    )
-                   # column(
-                   #   width = 3,
-                   #   textOutput('lipinski_text')
-                   # )
+                   
+                   
+                 ),
+                 fluidRow(
+                   column(
+                     width = 12,
+                     textOutput('lipinski_text')
+                   )
                  )
         ),
         # ML model to predict different candidates for Drug Therapies
