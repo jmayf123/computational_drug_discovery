@@ -65,11 +65,11 @@ shinyUI(
         tabPanel("EDA",
                  fluidRow(
                    column(
-                     width = 3,
+                     width = 6,
                      plotOutput('freq_graph')
                    ),
                    column(
-                     width = 3,
+                     width = 6,
                      plotOutput('logp_vs_mw_graph')
                    )
                    
