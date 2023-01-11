@@ -5,6 +5,7 @@ channels:
   - conda-forge
 dependencies:
   #  chembl_webresource_client --- you must pip install this package in your environment afterwards
+  #  padelpy --- you must pip install in env
   - python
   - jupyter
   - numpy
