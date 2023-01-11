@@ -70,7 +70,7 @@ shinyServer(function(input, output) {
       guides(size = guide_legend(title = "pIC50"), color = guide_legend(title = "Bioactivity Class"))
     
   })
-  
+  #Create facet grid of 4 lipinski descriptor comparisons and the pIC50 value, ACTIVE vs INACTIVE
   output$box_1 <- renderPlot({
     
     df <- df_bioactivities_cleaned() %>% 
@@ -79,7 +79,6 @@ shinyServer(function(input, output) {
                 y_data = df$pIC50,
                 y_label = "pIC50 Value"
     )
-    
   })
   
   output$box_2 <- renderPlot({
@@ -90,7 +89,6 @@ shinyServer(function(input, output) {
                 y_data = df$MW,
                 y_label = "MW Value"
     )
-    
   })
   output$box_3 <- renderPlot({
     
@@ -100,7 +98,6 @@ shinyServer(function(input, output) {
                 y_data = df$LogP,
                 y_label = "LogP Value"
     )
-    
   })
   output$box_4 <- renderPlot({
     
@@ -110,7 +107,6 @@ shinyServer(function(input, output) {
                 y_data = df$NumHDonors,
                 y_label = "Number of H Donors"
     )
-    
   })
   output$box_5 <- renderPlot({
     
@@ -120,11 +116,22 @@ shinyServer(function(input, output) {
                 y_data = df$NumHAcceptors,
                 y_label = "Number of H Acceptors"
     )
+  })
+  
+  output$mann_whitney_table <- renderDataTable({
     
+    df <- df_bioactivities_cleaned() %>% 
+      filter(bioactivity_class != "intermediate")
+    
+    mw_pIC50 <- mannwhitney('pIC50', df)
+    mw_MW <- mannwhitney('MW', df)
+    mw_LogP <- mannwhitney('LogP', df)
+    mw_H_donors <- mannwhitney('NumHDonors', df)
+    mw_H_acceptors <- mannwhitney('NumHAcceptors', df)
+    
+    do.call("rbind", list(mw_pIC50, mw_MW, mw_LogP, mw_H_donors, mw_H_acceptors))
   })
-  output$lipinksi_text <- renderText({
-    "Input the stuff about lipinski descriptors Here"
-  })
-  #Create facet grid of 4 lipinski descriptor comparisons, ACTIVE vs INACTIVE
+  
+
   
 })
