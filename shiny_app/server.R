@@ -30,7 +30,8 @@ shinyServer(function(input, output) {
   
   df_bioactivities_cleaned <- eventReactive(input$chembl_id_search, {
     
-    df_bioactivities <- get_bioactivities_data(input$chembl_id) 
+    df_bioactivities <- get_bioactivities_data(input$chembl_id) %>% drop_na()
+                          
     df_lipinski <- lipinski(df_bioactivities$canonical_smiles)
     df_combined <-  bind_cols(df_bioactivities, df_lipinski)
     df_norm <- norm_value(df_combined)

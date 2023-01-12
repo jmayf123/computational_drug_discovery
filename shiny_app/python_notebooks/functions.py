@@ -19,7 +19,7 @@ def target_search(target_name):
 def get_bioactivities_data(target_chembl_ID):
     activity = new_client.activity
     res = activity.filter(target_chembl_id=target_chembl_ID).filter(standard_type="IC50").only(['molecule_chembl_id','canonical_smiles','standard_value', 'standard_type'])
-    df = pd.DataFrame(res[0:500]) #Set a limit for now, take too long to compute over 500 activities
+    df = pd.DataFrame(res) #Set a limit for now, take too long to compute over 500 activities [0:500]
     df['standard_value'] = df['standard_value'].astype(float)
     
     conditions = [
