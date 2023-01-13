@@ -10,14 +10,17 @@
 
 shinyUI(
   
-  fluidPage(
+  dashboardPage(
     
     #App title 
-    titlePanel("Computational Drug Discovery Dashboard"),
+    dashboardHeader(
+      title = "Computational Drug Discovery Dashboard",
+      titleWidth = 450
+    ),
     
     #Sidebar
-    sidebarPanel(
-      width = 3,
+    dashboardSidebar(
+    width = 350,
       
       searchInput(
         inputId = "target_name",
@@ -75,30 +78,34 @@ shinyUI(
         style = "font-family: 'times'; font-si16pt")
       
       
+      
     ),
     
+    
     #Body
-    mainPanel(
-      
+    dashboardBody(
+
       tabsetPanel(
         # Data Table Tab
-        tabPanel("Data Tables",
+        tabPanel("1) Target Selection",
                  fluidRow(
-                   
+
                    column(
                      width = 6,
                      dataTableOutput("target_search_results")
                    ),
                    column(
-                     width = 6,
+                     width = 12,
+
                      valueBoxOutput("bioactivities_box")
+
                    )
-                   
+
                  )
-                 
+
         ),
         # Statistical Data analysis on Lipinski Descriptors
-        tabPanel("EDA",
+        tabPanel("2) EDA",
                  fluidRow(
                    column(
                      width = 6,

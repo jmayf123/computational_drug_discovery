@@ -16,22 +16,20 @@ shinyServer(function(input, output) {
   
   
   output$bioactivities_box <- renderValueBox({
-    
     valueBox(
-      "Number of Bioactivites Found for your Target:",
-      nrow(get_bioactivities_data(input$chembl_id)),
+      value = nrow(get_bioactivities_data(input$chembl_id)),
+      subtitle = "Number of Bioactivites Found for your Target",
       icon = icon(name = "pills", lib = "font-awesome"),
-      width = NULL,
-      color = "red"
-        
-    )
+      width = 4,
+      color = "red",
+      href = NULL)
     
   })
   
   df_bioactivities_cleaned <- eventReactive(input$chembl_id_search, {
     
     df_bioactivities <- get_bioactivities_data(input$chembl_id) %>% drop_na()
-                          
+    
     df_lipinski <- lipinski(df_bioactivities$canonical_smiles)
     df_combined <-  bind_cols(df_bioactivities, df_lipinski)
     df_norm <- norm_value(df_combined)
@@ -52,7 +50,7 @@ shinyServer(function(input, output) {
       geom_text(aes(label = scales::percent(after_stat(count)/sum(after_stat(count))), 
                     y = (after_stat(count))/sum(after_stat(count))), stat = "count", 
                 vjust = -0.25, size = 3.5)
-
+    
   })
   
   output$logp_vs_mw_graph <- renderPlot({
@@ -131,6 +129,6 @@ shinyServer(function(input, output) {
     do.call("rbind", list(mw_pIC50, mw_MW, mw_LogP, mw_H_donors, mw_H_acceptors))
   })
   
-
+  
   
 })
