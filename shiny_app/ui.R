@@ -9,8 +9,9 @@
 
 
 shinyUI(
-  
+ 
   dashboardPage(
+    skin = 'green',
     
     #App title 
     dashboardHeader(
@@ -20,7 +21,7 @@ shinyUI(
     
     #Sidebar
     dashboardSidebar(
-    width = 350,
+    width = 450,
       
       searchInput(
         inputId = "target_name",
@@ -44,6 +45,7 @@ shinyUI(
         width = NULL
       ),
       
+   
       p("Christopher Lipinski, a scientist at Pfizer, came up with a set of 
       rule-of-thumb for evaluating the druglikeness of compounds. Such druglikeness 
       is based on the Absorption, Distribution, Metabolism and Excretion (ADME) 
@@ -81,7 +83,6 @@ shinyUI(
       
     ),
     
-    
     #Body
     dashboardBody(
 
@@ -89,20 +90,15 @@ shinyUI(
         # Data Table Tab
         tabPanel("1) Target Selection",
                  fluidRow(
-
                    column(
-                     width = 6,
+                     width = 12,
                      dataTableOutput("target_search_results")
                    ),
                    column(
                      width = 12,
-
                      valueBoxOutput("bioactivities_box")
-
                    )
-
                  )
-
         ),
         # Statistical Data analysis on Lipinski Descriptors
         tabPanel("2) EDA",
@@ -130,7 +126,7 @@ shinyUI(
                  )
         ),
         # ML model to predict different candidates for Drug Therapies
-        tabPanel("ML Drug Discovery")
+        tabPanel("3) ML Drug Discovery")
       )
     )
     

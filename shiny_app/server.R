@@ -129,6 +129,19 @@ shinyServer(function(input, output) {
     do.call("rbind", list(mw_pIC50, mw_MW, mw_LogP, mw_H_donors, mw_H_acceptors))
   })
   
+  #ML Random Forest Regressor Model
   
+  # Y <- df_ml$pIC50
+  # X <- df_ml[, !(names(df_ml) %in% c("Name", "pIC50"))]
+  # selection <- VarianceThreshold(threshold = (0.8 * (1 - 0.8)))
+  # X <- selection$fit_transform(X)
+  # split <- sample.split(X, Y)
+  # X_train <- X[split,]
+  # Y_train <- Y[split]
+  # X_test <- X[!split,]
+  # Y_test <- Y[!split]
+  # model <- randomForest(Y_train ~., data = X_train)
+  # r2 <- cor(Y_test, predict(model, newdata = X_test))^2
+  # 
   
 })
