@@ -10,6 +10,7 @@ library(shinyWidgets)
 library(tidyverse)
 library(dplyr)
 library(shinydashboard)
+library(shinydashboardPlus)
 library(randomForest)
 library(caret)
 
