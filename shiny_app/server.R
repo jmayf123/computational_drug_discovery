@@ -29,10 +29,10 @@ shinyServer(function(input, output) {
   df_bioactivities_cleaned <- eventReactive(input$chembl_id_search, {
     
     df_bioactivities <- get_bioactivities_data(input$chembl_id) %>% drop_na()
-    
     df_lipinski <- lipinski(df_bioactivities$canonical_smiles)
     df_combined <-  bind_cols(df_bioactivities, df_lipinski)
     df_norm <- norm_value(df_combined)
+    
     df_bioactivities_cleaned <- pIC50(df_norm)
     
     
@@ -130,7 +130,7 @@ shinyServer(function(input, output) {
   })
   
   #ML Random Forest Regressor Model
-  
+  # 
   # Y <- df_ml$pIC50
   # X <- df_ml[, !(names(df_ml) %in% c("Name", "pIC50"))]
   # selection <- VarianceThreshold(threshold = (0.8 * (1 - 0.8)))

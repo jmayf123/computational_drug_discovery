@@ -1,18 +1,13 @@
 import pandas as pd
-import numpy as np
-import seaborn as sns
 import glob
-from padelpy import padeldescriptor, from_smiles
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.feature_selection import VarianceThreshold
+from padelpy import padeldescriptor
 
 def make_ml_df(df3):
 
     df3_selection = df3[['canonical_smiles', 'molecule_chembl_id']]
-    df3_selection.to_csv('python_notebooks/data/molecule.smi', sep='\t', index=False, header=False)
+    df3_selection.to_csv("data/molecule.smi", sep='\t', index=False, header=False)
 
-    xml_files = glob.glob("python_notebooks/data/xml_files/*.xml")
+    xml_files = glob.glob("data/xml_files/*.xml")
     xml_files.sort()
 
     FP_list = ['AtomPairs2DCount',
@@ -32,10 +27,10 @@ def make_ml_df(df3):
 
     fingerprint = 'PubChem'
 
-    fingerprint_output_file = ''.join(['python_notebooks/data/PubChem_fingerprints/',fingerprint,'.csv']) #Substructure.csv
+    fingerprint_output_file = ''.join(['data/PubChem_fingerprints/',fingerprint,'.csv']) #Substructure.csv
     fingerprint_descriptortypes = fp[fingerprint]
 
-    padeldescriptor(mol_dir='python_notebooks/data/molecule.smi', 
+    padeldescriptor(mol_dir='data/molecule.smi', 
                     d_file=fingerprint_output_file, 
                     descriptortypes= fingerprint_descriptortypes,
                     detectaromaticity=True,
@@ -47,7 +42,7 @@ def make_ml_df(df3):
                     fingerprints=True)
 
     fingerprint = 'PubChem'
-    fingerprint_output_file = ''.join(['python_notebooks/data/PubChem_fingerprints/',fingerprint,'.csv']) 
+    fingerprint_output_file = ''.join(['data/PubChem_fingerprints/',fingerprint,'.csv']) 
 
     descriptors = pd.read_csv(fingerprint_output_file)
 
