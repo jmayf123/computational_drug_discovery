@@ -1,0 +1,89 @@
+---
+title: "ML test"
+output: html_document
+date: "2023-01-17"
+---
+
+```{r}
+library(tidyverse)
+library(dplyr)
+library(randomForest)
+library(tidymodels)
+```
+
+```{r}
+descriptors <- read_csv("python_notebooks/data/PubChem_fingerprints/PubChem.csv", show_col_types = FALSE)
+df3 <- read_csv("python_notebooks/data/cleaned_bioactivity_data.csv", show_col_types = FALSE)
+```
+
+```{r}
+df_ml <- cbind(descriptors, df3[["pIC50"]]) %>% 
+            rename('pIC50' = 'df3[["pIC50"]]') %>% 
+            na.omit()
+```
+
+```{r}
+
+data <- df_ml[, !(names(df_ml) %in% c("Name"))]
+
+data_split <- initial_split(data = data,
+                             prop = .8)
+
+data_recipe <- training(data_split) %>%
+  recipe(pIC50 ~.) %>%
+  step_corr(all_predictors()) %>%
+  step_center(all_predictors(), -all_outcomes()) %>%
+  step_scale(all_predictors(), -all_outcomes()) %>%
+  prep()
+
+data_testing <- data_recipe %>%
+  bake(testing(data_split)) 
+
+data_training <- juice(data_recipe)
+
+model_ranger <- rand_forest(trees = 100, mode = "regression") %>%
+  set_engine("ranger") %>%
+  fit(pIC50 ~ ., data = data_training)
+
+```
+
+```{r}
+predict(object =  model_ranger, 
+        new_data = data_testing)
+```
+```{r}
+data %>% 
+  select(pIC50) %>% 
+  summary()
+```
+
+
+```{r}
+model_ranger %>%
+  predict(data_testing) %>%
+  bind_cols(data_testing) %>%
+  metrics(truth = pIC50, estimate = .pred)
+```
+```{r}
+
+
+# Assign the actual and estimated values to variables
+y_actual <- data_testing %>% 
+              select(pIC50)
+y_predicted <- predict(object =  model_ranger, 
+                       new_data = data_testing)
+
+# Create a dataframe with the actual and estimated values
+df_plot <- bind_cols(y_actual, y_predicted)
+
+# Use ggplot to create a scatter plot of the actual vs. estimated values
+df_plot %>% 
+  ggplot(aes(x = pIC50, y = .pred))+
+  geom_point()+
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed") +
+  xlab("Actual Values") +
+  ylab("Predicted Values")+
+  ggtitle("Actual vs Predicted Values")
+```
+
+

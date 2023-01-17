@@ -16,7 +16,7 @@ shinyUI(
     #App title 
     dashboardHeader(
       title = span("Computational Drug Discovery Dashboard", 
-                    style = "color: Green; font-size: 28px; font-weight: bold;"),
+                   style = "color: Green; font-size: 28px; font-weight: bold;"),
       titleWidth = 650
     ),
     
@@ -49,7 +49,7 @@ shinyUI(
       box(width = 12,
           title = "Information for EDA Tab:",
           
-      "Christopher Lipinski, a scientist at Pfizer, came up with a set of 
+          "Christopher Lipinski, a scientist at Pfizer, came up with a set of 
       rule-of-thumb for evaluating the druglikeness of compounds. Such druglikeness 
       is based on the Absorption, Distribution, Metabolism and Excretion (ADME) 
       that is also known as the pharmacokinetic profile. Lipinski analyzed all 
@@ -73,7 +73,7 @@ shinyUI(
       br(),br(),
       "Simply stated, pIC50 is the negative log of the IC50 value when converted to molar.
         This will give us a look at the IC50 values in a logrithmic sense."
-        
+      
       )
       
       
@@ -113,8 +113,11 @@ shinyUI(
                            "of molecuels to move forward with in your drug discovery research."
                            
                        ),
-                       valueBoxOutput(width = 12,
-                                      "bioactivities_box")
+                       box(width = 12,
+                           title = "Selected Target Bioactivity Data Table Information",
+                           valueBoxOutput(width = 12, "bioactivities_box"),
+                           downloadButton(width = 12, "download_data", "Download Data")
+                       )
                      )
                    )
                  )
@@ -145,7 +148,27 @@ shinyUI(
                  )
         ),
         # ML model to predict different candidates for Drug Therapies
-        tabPanel("3) ML Drug Discovery")
+        tabPanel("3) ML Drug Discovery",
+                 fluidRow(
+                   splitLayout(cellWidths = c('33%','33%','33%'),
+                               box(width = 12,
+                                   title = "Input: Possible Drug Candidates"
+                                   
+                                   
+                               ),
+                               box(width = 12,
+                                   title = "ML Model Selection",
+                                   "Work in Progress - Will add option for selecting other targets
+                                   , For now I have provided an integrated 
+                                   ML Model based on the molecular fingerprint for CHEMBL1966 - 
+                                   Dihydroorotate dehydrogenase"
+                               ),
+                               box(width = 12,
+                                   title = "Output: Predicted pIC50 Values"
+                               )
+                   )
+                 )
+        )
       )
     )
     
