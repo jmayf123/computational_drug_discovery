@@ -84,90 +84,99 @@ shinyUI(
       
       tabsetPanel(
         # Data Table Tab
-        tabPanel("1) Target Selection",
-                 fluidRow(
-                   column(
-                     width = 6,
-                     dataTableOutput("target_search_results")
-                   ),
-                   column(
-                     width = 6,
-                     fluidRow(
-                       box(width = 12,
-                           title = "Welcome to the Computational Drug Dicovery Dashboard!", 
-                           "STEP - 1: ",
-                           "To begin, search for an intended target protein with the first search bar.",
-                           br(),br(),
-                           "STEP - 2: ",
-                           "After You have found your selected target in the provided table, ",
-                           "copy and paste the CHEMBL ID Number into the second search bar on the left.",
-                           br(),br(),
-                           "STEP - 3: ",
-                           "After you have entered your desired CHEMBL ID, ",
-                           "the number of Bioactive molecules will appear in the value box below.",
-                           br(),br(),
-                           "You are then free to explore the Experimental Data Analysis (EDA) Tab,",
-                           "which has information on the bioactive molecules that were found for your target.",
-                           br(),br(),                              
-                           "The Machine Learning Drug Discovery tab will provide insight into possible candidates",
-                           "of molecuels to move forward with in your drug discovery research."
-                           
-                       ),
-                       box(width = 12,
-                           title = "Selected Target Bioactivity Data Table Information",
-                           valueBoxOutput(width = 12, "bioactivities_box"),
-                           downloadButton(width = 12, "download_data", "Download Data")
-                       )
-                     )
-                   )
-                 )
+        tabPanel(
+          "1) Target Selection",
+          fluidRow(
+            column(
+              width = 6,
+              dataTableOutput("target_search_results")
+            ),
+            column(
+              width = 6,
+              fluidRow(
+                box(width = 12,
+                    title = "Welcome to the Computational Drug Discovery Dashboard!", 
+                    "STEP - 1: ",
+                    "To begin, search for an intended target protein with the first search bar.",
+                    br(),br(),
+                    "STEP - 2: ",
+                    "After You have found your selected target in the provided table, ",
+                    "copy and paste the CHEMBL ID Number into the second search bar on the left.",
+                    br(),br(),
+                    "STEP - 3: ",
+                    "After you have entered your desired CHEMBL ID, ",
+                    "the number of Bioactive molecules will appear in the value box below.",
+                    br(),br(),
+                    "You are then free to explore the Experimental Data Analysis (EDA) Tab,",
+                    "which has information on the bioactive molecules that were found for your target.",
+                    br(),br(),                              
+                    "The Machine Learning Drug Discovery tab will provide insight into possible candidates",
+                    "of molecuels to move forward with in your drug discovery research."
+                    
+                ),
+                box(width = 12,
+                    title = "Selected Target Bioactivity Data Table Information",
+                    valueBoxOutput(width = 12, "bioactivities_box"),
+                    downloadButton(width = 12, "download_data", "Download Data")
+                )
+              )
+            )
+          )
         ),
         # Statistical Data analysis on Lipinski Descriptors
-        tabPanel("2) EDA",
-                 fluidRow(
-                   column(
-                     width = 6,
-                     plotOutput('freq_graph')
-                   ),
-                   column(
-                     width = 6,
-                     plotOutput('logp_vs_mw_graph')
-                   )
-                 ),
-                 fluidRow(
-                   splitLayout(cellWidths = c('20%','20%','20%','20%','20%'),
-                               plotOutput('box_1'),
-                               plotOutput('box_2'),
-                               plotOutput('box_3'),
-                               plotOutput('box_4'),
-                               plotOutput('box_5')
-                   )
-                 ),
-                 fluidRow(
-                   dataTableOutput("mann_whitney_table")
-                 )
+        tabPanel(
+          "2) EDA",
+          fluidRow(
+            column(
+              width = 6,
+              plotOutput('freq_graph')
+            ),
+            column(
+              width = 6,
+              plotOutput('logp_vs_mw_graph')
+            )
+          ),
+          fluidRow(
+            splitLayout(cellWidths = c('20%','20%','20%','20%','20%'),
+                        plotOutput('box_1'),
+                        plotOutput('box_2'),
+                        plotOutput('box_3'),
+                        plotOutput('box_4'),
+                        plotOutput('box_5')
+            )
+          ),
+          fluidRow(
+            dataTableOutput("mann_whitney_table")
+          )
         ),
         # ML model to predict different candidates for Drug Therapies
-        tabPanel("3) ML Drug Discovery",
-                 fluidRow(
-                   splitLayout(cellWidths = c('33%','33%','33%'),
-                               box(width = 12,
-                                   title = "Input: Possible Drug Candidates"
-                                   
-                                   
-                               ),
-                               box(width = 12,
-                                   title = "ML Model Selection",
-                                   "Work in Progress - Will add option for selecting other targets
-                                   , For now I have provided an integrated 
-                                   ML Model based on the molecular fingerprint for CHEMBL1966 - 
-                                   Dihydroorotate dehydrogenase"
-                               ),
-                               box(width = 12,
-                                   title = "Output: Predicted pIC50 Values"
-                               )
-                   )
-                 )
+        tabPanel(
+          "3) ML Drug Discovery",
+          fluidRow(
+            box(width = 12,
+                title = "Input: Possible Drug Candidates",
+                "PLease Input .csv file containing"
+            )
+          ),
+          fluidRow(
+            box(width = 12,
+                title = "ML Model Selection",
+                selectInput(
+                  inputId = 'target_ml_model',
+                  label = 'Choose a Target ML Model to Predict pIC50 Values',
+                  choices = c('CHEMBL1966 - Dihydroorotate dehydrogenase')
+                ),
+                "Work in Progress - Will add option for selecting", 
+                "other targets, For now I have provided an integrated",
+                "ML Model based on the molecular fingerprint for",
+                "CHEMBL1966 - Dihydroorotate dehydrogenase"
+            )
+          ),
+          fluidRow(
+            box(width = 12,
+                title = "Output: Predicted pIC50 Values"
+            )
+          )
         )
       )
     )
