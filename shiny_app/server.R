@@ -144,14 +144,13 @@ shinyServer(function(input, output) {
     
   }, deleteFile = F)
   
-  in_df <- reactive({
-    inFile <- input$df_bio_input#Input with 1st Col = canonical_smile, 2nd - chembl_id
-    in_df <- read_csv(inFile)
-  })
   
-  output$predictedIC50 <- renderDataTable({
+  output$predictedIC50 <- renderTable({
     
-    in_df <- in_df()
+    inFile <- input$df_bio_input#Input with 1st Col = canonical_smile, 2nd - chembl_id
+    in_df <- read_csv(inFile$datapath)
+    
+    
     sp <- get.smiles.parser()
     smiles <- in_df$canonical_smile
     mols <- parse.smiles(smiles)

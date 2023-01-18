@@ -47,21 +47,6 @@ model_ranger <- rand_forest(trees = 100, mode = "regression") %>%
 ```
 
 ```{r}
-predict(object =  model_ranger, 
-        new_data = data_testing)
-```
-```{r}
-data %>% 
-  select(pIC50) %>% 
-  summary()
-```
-```{r}
-model_ranger %>%
-  predict(data_testing)
-```
-
-
-```{r}
 model_ranger %>%
   predict(data_testing) %>%
   bind_cols(data_testing) %>%
@@ -94,9 +79,4 @@ saveRDS(model_ranger, file = 'ML_model_CHEMBL1966.rds')
 ```
 
 
-```{r}
-
-
-
-```
 

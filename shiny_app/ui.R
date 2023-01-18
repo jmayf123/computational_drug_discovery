@@ -195,7 +195,7 @@ shinyUI(
           fluidRow(
             box(width = 12,
                 title = "Output: Predicted pIC50 Values",
-                dataTableOutput("predictedIC50")
+                tableOutput("predictedIC50")
             )
           )
         )
