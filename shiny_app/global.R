@@ -1,9 +1,9 @@
 
 reticulate::use_condaenv("drug_discovery")
 #Reading in our python functions so we can use the chembl webresource client 
-reticulate::source_python("python_notebooks/functions.py")
-reticulate::source_python("python_notebooks/functions_2.py")
-reticulate::source_python("python_notebooks/functions_3.py")
+reticulate::source_python("python/functions.py")
+reticulate::source_python("python/functions_2.py")
+
 
 library(shiny)
 library(shinyWidgets)

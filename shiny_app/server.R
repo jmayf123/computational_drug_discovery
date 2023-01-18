@@ -39,10 +39,12 @@ shinyServer(function(input, output) {
   })
   
   output$download_data <- downloadHandler(
+    
     filename = paste("bioactivities_for_target",".csv", sep = ""),
     content = function(file) {
       write.csv(df_bioactivities_cleaned(), file, row.names = FALSE)
     }
+    
   )
   
   #EDA stuff
@@ -138,12 +140,6 @@ shinyServer(function(input, output) {
   
   #ML Random Forest Regression Model
   
-  output$test_input_img <- renderImage({
-    
-    list(src = "www/test_input_img.png")
-    
-  }, deleteFile = F)
-  
   
   output$predictedIC50 <- renderTable({
     
@@ -164,7 +160,7 @@ shinyServer(function(input, output) {
       rename_at(vars(col.from), function(x) col.to)
     
     
-    model <- readRDS('ML_model_CHEMBL1966.rds')
+    model <- readRDS('python/data/ML_model_CHEMBL1966.rds')
     
     model %>% 
       predict(fp_df) %>% 

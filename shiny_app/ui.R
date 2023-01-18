@@ -66,6 +66,10 @@ shinyUI(
       br(),
       "4. Hydrogen bond acceptors < 10",
       br(),br(),
+      "All of the active molecules were defined by having a standard IC50 value
+      of less than 1000 nM (nano mol/L), and the inactive molecules having a 
+      value greater than 10,000 nM.",
+      br(), br(),
       "Half-maximal inhibitory concentration (IC50) is the most widely used 
         and informative measure of a drug's efficacy. It indicates how much drug 
         is needed to inhibit a biological process by half, thus providing a
@@ -81,6 +85,7 @@ shinyUI(
     
     #Body
     dashboardBody(
+      
       
       tabsetPanel(
         # Data Table Tab
@@ -153,17 +158,28 @@ shinyUI(
         # ML model to predict different candidates for Drug Therapies
         tabPanel(
           "3) ML Drug Discovery",
-          fluidRow(
-            box(width = 12,
+          box(
+            id = 'input_box',
+            title = "Input: Possible New Drug Candidates for your Target",
+            width = 12,
+            fluidRow(
+              column(
+                width = 7,
                 
-                title = "Input: Possible New Drug Candidates for your Target",
-                "Please Input .csv file containing no more than 10 candidates for a new drug therapy.",
+                "If you are interested in checking out more molecules that are not included",
+                "in the bioactivites list, you can input them here ",
+                "Please Input .csv file containing up to 10 candidates for a new drug therapy.",
                 "The ML algorithm will predict a pIC50 value for your choices.",
-                br(), br(),
                 "Input format chould be in canonical_smile,chembl_id .csv form.",
-                "Please see example below:",br(),br(),
-                imageOutput("test_input_img"),
-    
+                "Please see example below:",
+                br()
+                
+                
+                
+              ),
+              column(
+                width = 5,
+                
                 fileInput(
                   inputId = 'df_bio_input',
                   label = "Choose File",
@@ -174,8 +190,24 @@ shinyUI(
                     "text/comma-separated-values,text/plain",
                     ".csv")
                 )
+                
+              )
             )
+            
           ),
+          
+          
+          div(tags$img(src = "test_input_img.png",
+                       width = "700px",
+                       height = "150px",
+                       alt = "Something's Wrong",
+                       deleteFile = FALSE
+                      ),
+              style = "text-align: center;"
+          ),
+          
+          br(),br(),
+          
           fluidRow(
             box(width = 12,
                 title = "ML Model Target Selection",
@@ -192,6 +224,10 @@ shinyUI(
                 "Rheumatoid Arthritis and othe autoimmune diseases."
             )
           ),
+          
+          
+          
+          
           fluidRow(
             box(width = 12,
                 title = "Output: Predicted pIC50 Values",
