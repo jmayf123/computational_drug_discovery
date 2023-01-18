@@ -39,7 +39,7 @@ shinyServer(function(input, output) {
   })
   
   output$download_data <- downloadHandler(
-    filename = paste("bioactivities_for_target_",input$chembl_id,".csv", sep = ""),
+    filename = paste("bioactivities_for_target",".csv", sep = ""),
     content = function(file) {
       write.csv(df_bioactivities_cleaned(), file, row.names = FALSE)
     }
@@ -137,6 +137,40 @@ shinyServer(function(input, output) {
   })
   
   #ML Random Forest Regression Model
-
+  
+  output$test_input_img <- renderImage({
+    
+    list(src = "www/test_input_img.png")
+    
+  }, deleteFile = F)
+  
+  in_df <- reactive({
+    inFile <- input$df_bio_input#Input with 1st Col = canonical_smile, 2nd - chembl_id
+    in_df <- read_csv(inFile)
+  })
+  
+  output$predictedIC50 <- renderDataTable({
+    
+    in_df <- in_df()
+    sp <- get.smiles.parser()
+    smiles <- in_df$canonical_smile
+    mols <- parse.smiles(smiles)
+    
+    fps <- lapply(mols, get.fingerprint, type='pubchem')
+    
+    col.from <- c(paste0("V",as.character(1:881)))
+    col.to <- c(paste0("PubchemFP",as.character(0:880)))
+    
+    fp_df <- as_tibble(fp.to.matrix(fps)) %>% 
+      rename_at(vars(col.from), function(x) col.to)
+    
+    
+    model <- readRDS('ML_model_CHEMBL1966.rds')
+    
+    model %>% 
+      predict(fp_df) %>% 
+      mutate(CHEMBL_ID = in_df$chembl_id, .before = .pred) %>% 
+      rename(Predicted_pIC50_Value = .pred)
+  })
   
 })

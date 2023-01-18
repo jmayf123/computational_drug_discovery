@@ -11,12 +11,12 @@ library(tidymodels)
 ```
 
 ```{r}
-descriptors <- read_csv("python_notebooks/data/PubChem_fingerprints/PubChem.csv", show_col_types = FALSE)
+fingerprints <- read_csv("PubChem.csv", show_col_types = FALSE)
 df3 <- read_csv("python_notebooks/data/cleaned_bioactivity_data.csv", show_col_types = FALSE)
 ```
 
 ```{r}
-df_ml <- cbind(descriptors, df3[["pIC50"]]) %>% 
+df_ml <- cbind(fingerprints, df3[["pIC50"]]) %>% 
             rename('pIC50' = 'df3[["pIC50"]]') %>% 
             na.omit()
 ```
@@ -55,6 +55,10 @@ data %>%
   select(pIC50) %>% 
   summary()
 ```
+```{r}
+model_ranger %>%
+  predict(data_testing)
+```
 
 
 ```{r}
@@ -85,4 +89,14 @@ df_plot %>%
   ggtitle("Actual vs Predicted Values")
 ```
 
+```{r}
+saveRDS(model_ranger, file = 'ML_model_CHEMBL1966.rds')
+```
+
+
+```{r}
+
+
+
+```
 

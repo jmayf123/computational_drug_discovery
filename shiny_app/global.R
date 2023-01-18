@@ -13,6 +13,8 @@ library(shinydashboard)
 library(shinydashboardPlus)
 library(randomForest)
 library(caret)
+library(rcdk)
+library(fingerprint)
 
 
 
@@ -23,3 +25,4 @@ box_plotter <- function(df, y_data, y_label) {
     ylab(y_label)+
     guides(fill = FALSE)    
 }
+

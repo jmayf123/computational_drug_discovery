@@ -106,6 +106,7 @@ shinyUI(
                     "STEP - 3: ",
                     "After you have entered your desired CHEMBL ID, ",
                     "the number of Bioactive molecules will appear in the value box below.",
+                    "Click the 'Download Data' to download your bioactivities as a .csv file",
                     br(),br(),
                     "You are then free to explore the Experimental Data Analysis (EDA) Tab,",
                     "which has information on the bioactive molecules that were found for your target.",
@@ -154,27 +155,47 @@ shinyUI(
           "3) ML Drug Discovery",
           fluidRow(
             box(width = 12,
-                title = "Input: Possible Drug Candidates",
-                "PLease Input .csv file containing"
+                
+                title = "Input: Possible New Drug Candidates for your Target",
+                "Please Input .csv file containing no more than 10 candidates for a new drug therapy.",
+                "The ML algorithm will predict a pIC50 value for your choices.",
+                br(), br(),
+                "Input format chould be in canonical_smile,chembl_id .csv form.",
+                "Please see example below:",br(),br(),
+                imageOutput("test_input_img"),
+    
+                fileInput(
+                  inputId = 'df_bio_input',
+                  label = "Choose File",
+                  buttonLabel = "Browse...",
+                  placeholder = "No file selected...",
+                  accept = c(
+                    "text/csv",
+                    "text/comma-separated-values,text/plain",
+                    ".csv")
+                )
             )
           ),
           fluidRow(
             box(width = 12,
-                title = "ML Model Selection",
+                title = "ML Model Target Selection",
                 selectInput(
                   inputId = 'target_ml_model',
-                  label = 'Choose a Target ML Model to Predict pIC50 Values',
+                  label = 'Choose a Target to Predict pIC50 Values For:',
                   choices = c('CHEMBL1966 - Dihydroorotate dehydrogenase')
                 ),
                 "Work in Progress - Will add option for selecting", 
                 "other targets, For now I have provided an integrated",
                 "ML Model based on the molecular fingerprint for",
-                "CHEMBL1966 - Dihydroorotate dehydrogenase"
+                "CHEMBL1966 - Dihydroorotate dehydrogenase",
+                "Inhibitors of this target protein are known to be a cure for",
+                "Rheumatoid Arthritis and othe autoimmune diseases."
             )
           ),
           fluidRow(
             box(width = 12,
-                title = "Output: Predicted pIC50 Values"
+                title = "Output: Predicted pIC50 Values",
+                dataTableOutput("predictedIC50")
             )
           )
         )

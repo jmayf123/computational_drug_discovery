@@ -1,7 +1,6 @@
 #CSV's 
-*.csv
 *.csv.log
-*.smi
+
 
 # History files
 .Rhistory
