@@ -4,7 +4,7 @@ Uses chembl webresorce client for python available from the ChEMBL Database to e
 
 
 # Specific Requirements
-- create conda environment with "environment.yaml" using the following command:
+- create conda environment with "environment.yml" using the following command:
 
     conda env create -n ENVNAME --file environment.yml
 
